@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -19,7 +20,7 @@ public class UserActivity extends AppCompatActivity {
 
     private String yr,mon,dy;
     EditText disDate,Fajar,Zohar,Asar,Maghrib,Aisha,UP_Fajar,UP_Zohar,UP_Asar,UP_Maghrib,UP_Aisha;
-    Button btn_show,btn_date;
+    Button btn_show,btn_date,btn_update;
 
 
     @Override
@@ -29,7 +30,7 @@ public class UserActivity extends AppCompatActivity {
 
         btn_date=(Button) findViewById(R.id.select_date);
         btn_show=(Button) findViewById(R.id.fetch_btn);
-
+        btn_update=(Button) findViewById(R.id.UpdateBtn);
         disDate=(EditText) findViewById(R.id.date);
         Fajar=(EditText) findViewById(R.id.fajar);
         Zohar=(EditText) findViewById(R.id.zohar);
@@ -116,6 +117,26 @@ public class UserActivity extends AppCompatActivity {
 
             }
         });
+
+        btn_update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(UP_Fajar.getText().toString().equals("") && UP_Zohar.getText().toString().equals("") && UP_Asar.getText().toString().equals("")
+                && UP_Maghrib.getText().toString().equals("") && UP_Aisha.getText().toString().equals(""))
+                {
+                    Toast.makeText(UserActivity.this, "Admin Login", Toast.LENGTH_SHORT).show();
+                }
+
+                String up_fajar,up_zohar, up_asar, up_maghrib, up_aisha;
+
+                if(UP_Fajar.getText().toString()!="")
+                {
+                    up_fajar=UP_Fajar.getText().toString();
+                }
+            }
+        });
+
+
     }
 
     private DatePickerDialog.OnDateSetListener dateListener=new DatePickerDialog.OnDateSetListener() {
