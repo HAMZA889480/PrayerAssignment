@@ -14,6 +14,7 @@ import data.MyDbHandler;
 
 public class MainActivity extends AppCompatActivity {
 
+
     EditText user_name, Password;
     Button add_student;
 
@@ -25,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
         add_student = (Button) findViewById(R.id.buttonLogin);
         user_name = (EditText) findViewById(R.id.login);
         Password = (EditText) findViewById(R.id.password);
+
+        MyDbHandler db=new MyDbHandler(MainActivity.this);
+        //db.addLocationColumn();
 
 
         add_student.setOnClickListener(new View.OnClickListener() {
@@ -42,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(adminIntent);
                     Toast.makeText(MainActivity.this, "Admin Login", Toast.LENGTH_SHORT).show();
                 } else {
-
-                    MyDbHandler db=new MyDbHandler(MainActivity.this);
 
                     if(db.verifyLogin(User,password))
                     {

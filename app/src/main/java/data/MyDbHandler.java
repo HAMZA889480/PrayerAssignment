@@ -37,6 +37,7 @@ public class MyDbHandler extends SQLiteOpenHelper{
                 + Params.DATE + " DATE,"
                 + Params.FAJAR + " INTEGER,"
                 + Params.ZOHAR + " INTEGER,"
+                + Params.ASAR + " INTEGER,"
                 + Params.MAGHRIB + " INTEGER,"
                 + Params.AISHA + " INTEGER,"
                 + "FOREIGN KEY (" + Params.USER_ID + ") REFERENCES " + Params.USERS_TABLE + "(" + Params.USER_ID + ")" + ")";
@@ -54,12 +55,36 @@ public class MyDbHandler extends SQLiteOpenHelper{
 
     }
 
-    public void addUser(users user) {
+    public long addUser(users user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(Params.USERNAME, user.getUsr_name());
         values.put(Params.PASSWORD, user.getPassword());
-        db.insert(Params.USERS_TABLE, null, values);
+        long id= db.insert(Params.USERS_TABLE, null, values);
+        db.close();
+        return id;
+    }
+
+    public void addActivity(Activity activity)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues values=new ContentValues();
+        values.put(Params.DATE,activity.getDate());
+        values.put(Params.FAJAR,activity.isFajar());
+        values.put(Params.ZOHAR,activity.isZohar());
+        values.put(Params.ASAR,activity.isAsar());
+        values.put(Params.MAGHRIB,activity.isMaghrib());
+        values.put(Params.AISHA,activity.isAisha());
+        values.put(Params.USER_ID,activity.getUser_id());
+
+        //Adding this to data base
+        db.insert(Params.ACTIVITY_TABLE,null,values);
+        db.close();
+    }
+
+    public void addLocationColumn() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("ALTER TABLE " + Params.ACTIVITY_TABLE + " ADD COLUMN asar TEXT");
         db.close();
     }
 
@@ -113,6 +138,26 @@ public class MyDbHandler extends SQLiteOpenHelper{
             return activity;
         }
         return null;
+    }
+
+    public void updateActivity(Activity activity, int user_id, String date)
+    {
+        SQLiteDatabase db=this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+
+        values.put(Params.FAJAR,activity.isFajar());
+        values.put(Params.ZOHAR,activity.isZohar());
+        values.put(Params.ASAR,activity.isAsar());
+        values.put(Params.MAGHRIB,activity.isMaghrib());
+        values.put(Params.AISHA,activity.isAisha());
+
+
+        db.update(Params.ACTIVITY_TABLE, values,
+                Params.USER_ID + " = ? AND " + Params.DATE + " = ?",
+                new String[] {String.valueOf(user_id), date});
+        db.close();
+
     }
 
 }

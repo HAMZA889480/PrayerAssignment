@@ -85,29 +85,29 @@ public class UserActivity extends AppCompatActivity {
                     Aisha.setText("Not Offered");
                 }else
                 {
-                    if(newActivity.isFajar()==0)
+                    if(newActivity.isFajar()==-99)
                         Fajar.setText("Not Offered");
                     else
                         Fajar.setText("Offered");
 
-                    if(newActivity.isZohar()==0)
+                    if(newActivity.isZohar()==-99)
                         Fajar.setText("Not Offered");
                     else
                         Fajar.setText("Offered");
 
-                    if(newActivity.isAsar()==0)
-                        Fajar.setText("Not Offered");
-                    else
-                        Fajar.setText("Offered");
-
-
-                    if(newActivity.isMaghrib()==0)
+                    if(newActivity.isAsar()==-99)
                         Fajar.setText("Not Offered");
                     else
                         Fajar.setText("Offered");
 
 
-                    if(newActivity.isAisha()==0)
+                    if(newActivity.isMaghrib()==-99)
+                        Fajar.setText("Not Offered");
+                    else
+                        Fajar.setText("Offered");
+
+
+                    if(newActivity.isAisha()==-99)
                         Fajar.setText("Not Offered");
                     else
                         Fajar.setText("Offered");
@@ -118,21 +118,85 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
+
+
+
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(UP_Fajar.getText().toString().equals("") && UP_Zohar.getText().toString().equals("") && UP_Asar.getText().toString().equals("")
-                && UP_Maghrib.getText().toString().equals("") && UP_Aisha.getText().toString().equals(""))
-                {
-                    Toast.makeText(UserActivity.this, "Admin Login", Toast.LENGTH_SHORT).show();
-                }
-
                 String up_fajar,up_zohar, up_asar, up_maghrib, up_aisha;
+                up_fajar=UP_Fajar.getText().toString();
+                up_zohar=UP_Zohar.getText().toString();
+                up_asar=UP_Asar.getText().toString();
+                up_maghrib=UP_Maghrib.getText().toString();
+                up_aisha=UP_Aisha.getText().toString();
 
-                if(UP_Fajar.getText().toString()!="")
+
+                //All update fields are empty
+                if(up_fajar.equals("") && up_zohar.toString().equals("") && up_asar.equals("")
+                && up_maghrib.equals("") && up_aisha.equals(""))
                 {
-                    up_fajar=UP_Fajar.getText().toString();
+                    Toast.makeText(UserActivity.this, "Provide Updates!!!", Toast.LENGTH_SHORT).show();
                 }
+                else
+                {
+                    //Setting with default values
+                    int is_up_fajar=-99;
+                    int is_up_zohar=-99;
+                    int is_up_asar=-99;
+                    int is_up_maghrib=-99;
+                    int is_up_aisha=-99;
+
+                    if(!(up_fajar.equals("")))
+                    {
+                        if(up_fajar.equals("Done") ||up_fajar.equals("done")) {
+                            is_up_fajar = 1;
+                            Fajar.setText("Offered");
+                        }
+                    }
+
+                    if(!(up_zohar.equals("")))
+                    {
+                        if(up_zohar.equals("Done") ||up_zohar.equals("done")) {
+                            is_up_zohar = 1;
+                            Zohar.setText("Offered");
+                        }
+                    }
+                    if(!(up_asar.equals("")))
+                    {
+                        if(up_asar.equals("Done") ||up_asar.equals("done")) {
+                            is_up_asar = 1;
+                            Asar.setText("Offered");
+                        }
+                    }
+                    if(!(up_maghrib.equals("")))
+                    {
+                        if(up_maghrib.equals("Done") ||up_maghrib.equals("done")) {
+                            is_up_maghrib = 1;
+                            Maghrib.setText("Offered");
+                        }
+                    }
+                    if(!(up_aisha.equals("")))
+                    {
+                        if(up_aisha.equals("Done") ||up_aisha.equals("done")) {
+                            is_up_aisha = 1;
+                            Aisha.setText("Offered");
+                        }
+                    }
+
+                    //Now create activity object
+                    Activity up_activity=new Activity(disDate.getText().toString(),
+                            is_up_fajar,is_up_zohar,is_up_asar,is_up_maghrib,is_up_aisha,
+                            Usr_ID);
+
+                    db.updateActivity(up_activity,Usr_ID,disDate.getText().toString());
+
+                    Toast.makeText(UserActivity.this, "Record Updated!!!", Toast.LENGTH_SHORT).show();
+                }
+
+
+
+
             }
         });
 

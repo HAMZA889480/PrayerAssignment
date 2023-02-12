@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import Model.Activity;
 import Model.users;
 import data.MyDbHandler;
 
@@ -41,9 +42,12 @@ public class AddUserActivity extends AppCompatActivity {
                 {
                     //Creating user object
                     users user=new users(newUser,newPassword);
-
+                    Activity activity=new Activity();
                     //Adding user to data base
-                    db.addUser(user);
+                    long user_ID=db.addUser(user);
+
+                    activity.setUser_id((int)user_ID);
+                    db.addActivity(activity);
                     Toast.makeText(AddUserActivity.this, "User Added!!!", Toast.LENGTH_SHORT).show();
                 }
 

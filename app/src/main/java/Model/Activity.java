@@ -13,10 +13,10 @@ public class Activity {
 
     users user=new users();
 
-    public Activity(String date, int asar,int fajar, int zohar, int maghrib, int aisha)
+    public Activity(String date, int fajar, int zohar, int asar,int maghrib, int aisha, int user_id)
     {
         this.date=date;
-        this.user_id=user.getId();
+        this.user_id=user_id;
         this.fajar=fajar;
         this.zohar=zohar;
         this.asar=asar;

@@ -17,6 +17,7 @@ public class Params {
     public static final String DATE = "date";
     public static final String FAJAR = "Fajar";
     public static final String ZOHAR = "Zohar";
+    public static final String ASAR="asar";
     public static final String MAGHRIB = "Maghrib";
     public static final String AISHA = "Aisha";
 }
